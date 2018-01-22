@@ -1,6 +1,19 @@
 <?php
 	session_start();
 	include('functions.php');
+	if(isset($_SESSION['uid'])){
+		include('mysqli_query.php');
+
+		if(isset($_POST['buy'])){
+			print_r($_POST);
+			build_buy($_POST['build_id'],$_POST['seller_id'],$_SESSION['uid'],$_POST['build_sell_cost']);
+		}
+
+
+
+
+
+	}
 	include('header.php');
 	if(isset($_SESSION['uid'])){
 ?>
@@ -38,12 +51,13 @@
 </div>
 <hr>
 <div id="realty_buy">
-<h4>Рынок недвижимость(В проекции)</h4>
+<h4>Рынок недвижимость(В разработке)</h4>
 	<div class="row">
 		<div class="col-md-1"><b>ID</b></div>
 		<div class="col-md-1"><b>Тип</b></div>
 		<div class="col-md-3"><b>Адрес</b></div>
 		<div class="col-md-2"><b>Доходность</b></div>
+		<div class="col-md-1"><b>Себестоимость</b></div>
 		<div class="col-md-1"><b>Цена</b></div>
 		<div class="col-md-2"><b>Владелец</b></div>
 		<div class="col-md-1"><b>Рынок</b></div>
@@ -52,23 +66,32 @@
 
 
 <?php
-
+	//Выборка всех зданий которые выставлены на продажу
 	$build_in_sell = mysqli_query(connect(),"SELECT * FROM `build` WHERE `build_in_sell` = 'yes'")or die(mysqli_error());
-	while($row = mysqli_fetch_assoc($build_in_sell)){
-		//Не выводит первое значение
-		echo "<div class=\"row\">";
-			echo "<div class=\"col-md-1\">".$row['build_id']."</div>";
-			echo "<div class=\"col-md-1\">".$row['build_type']."</div>";
-			echo "<div class=\"col-md-3\">".$row['build_addres']."</div>";
-			echo "<div class=\"col-md-2\">".$row['build_profit']."</div>";
-			echo "<div class=\"col-md-1\">".$row['build_cost']."</div>";
-			$account_in_sell = mysqli_query(connect(),"SELECT `username` FROM `users` WHERE `id` = '".$row['build_owner']."'")or die(mysqli_error());
-			$account_in_sell_username = mysqli_fetch_assoc($account_in_sell);
-			echo "<div class=\"col-md-2\">".$account_in_sell_username['username']."(".$row['build_owner'].")</div>";
-			echo "<div class=\"col-md-1\"><input type=\"submit\" class=\"btn btn-info\" name=\"buy\" value=\"Купить\"></div>";
-		echo "</div>";
-	}
-?>	
+	//Цикл
+	while($row = mysqli_fetch_assoc($build_in_sell)){ 
+		//
+		$account_in_sell = mysqli_query(connect(),"SELECT `username` FROM `users` WHERE `id` = '".$row['build_owner']."'")or die(mysqli_error());
+		$account_in_sell_username = mysqli_fetch_assoc($account_in_sell);
+?>		<form action="realty.php" method="post">
+			<div class="row">
+				<div class="col-md-1"><?php echo $row['build_id'];?></div>
+				<div class="col-md-1"><?php echo $row['build_type'];?></div>
+				<div class="col-md-3"><?php echo $row['build_addres'];?></div>
+				<div class="col-md-2"><?php echo $row['build_profit'];?></div>
+				<div class="col-md-1"><?php echo $row['build_cost'];?></div>
+				<div class="col-md-1"><?php echo $row['build_sell_cost'];?></div>
+				<div class="col-md-2"><?php echo $account_in_sell_username['username']."(".$row['build_owner'].")";?></div>
+				<div class="col-md-1">
+					<input type="hidden" name="build_id" value="<?php echo $row['build_id'];?>">
+					<input type="hidden" name="build_sell_cost" value="<?php echo $row['build_sell_cost'];?>">
+					<input type="hidden" name="seller_id" value="<?php echo $row['build_owner'];?>">
+					<input type="submit" class="btn btn-info" name="buy" value="Купить">
+
+				</div>
+			</div>
+		</form>
+<?php }?> <!-- Закрытие while -->	
 </div>
 Если на рынке своя недвижимость, то вместо купить - Отменить.
 <input type="submit" class="btn btn-warning" name="cancel" value="Отменить">

@@ -1,6 +1,9 @@
 <?php
 	session_start();
 	include('functions.php');
+	if(isset($_SESSION['uid'])){
+		include('mysqli_query.php');
+	}
 	include('header.php');
 	if(isset($_SESSION['uid'])){
 ?>

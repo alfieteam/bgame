@@ -53,15 +53,15 @@
 		</div>
 		<div class="col-md-10" align="center">
 			<?php if(isset($_SESSION['uid'])){ //Показываем если авторизирован
-				include('mysqli_query.php');
+				
 			?>
 				<ul class="hr">
-					<li>Деньги: $0(в разработке)</li>
+					<li>Деньги: $<b><?php echo $stats['cash'];?></b></li>
 					<li>Доход: $0/день(в разработке)</li>
-					<li>Енергия: 0/0(в разработке)</li>
+					<li>Енергия: <b><?php echo $stats['energy'];?></b>/100</li>
 					<li>Найм: 0 человек(в разработке)</li>
 				</ul>
-			<?php } // закрытие if?>
+			<?php }?>
 		</div>
 	</div>
 </header>
