@@ -9,6 +9,9 @@
 	div{
 		padding-left: 5px;
 	}
+	div div div{
+		padding: 4px;
+	}
 	header a{
 		color: black;
 	}
@@ -19,7 +22,8 @@
 	table tr td{
 		border: 1px black solid;
 	}
-	#realty{
+	#content{
+		background: #F0F8FF;
 	}
 	#navigation{
 		padding-top: 7px;
@@ -48,7 +52,9 @@
 			<a href="main.php" class="navbar-brand"><b>BigBiz Games</b></a>
 		</div>
 		<div class="col-md-10" align="center">
-			<?php if(isset($_SESSION['uid'])){ //Показываем если авторизирован?>
+			<?php if(isset($_SESSION['uid'])){ //Показываем если авторизирован
+				include('mysqli_query.php');
+			?>
 				<ul class="hr">
 					<li>Деньги: $0(в разработке)</li>
 					<li>Доход: $0/день(в разработке)</li>
@@ -66,12 +72,13 @@
 			if(isset($_SESSION['uid'])){
 		?>
 			<ul>
-				<li><a href="#">Работа</a></li>
-				<li><a href="#">Недвижемости</a></li>
-				<li><a href="#">Бизнес</a></li>
-				<li><a href="#">Строительство</a></li>
-				<li><a href="#">Рейтинг</a></li>
-				<li><a href="#">FAQ</a></li>
+				<li><a href="main.php">Главная(В разработке)</a></li>
+				<li><a href="#">Работа(в проекции)</a></li>
+				<li><a href="realty.php">Недвижемости(В разработке)</a></li>
+				<li><a href="#">Бизнес(в проекции)</a></li>
+				<li><a href="#">Строительство(в проекции)</a></li>
+				<li><a href="#">Рейтинг(в проекции)</a></li>
+				<li><a href="#">FAQ(в проекции)</a></li>
 				<li><a href="logout.php">Выход</a></li>
 			</ul>
 		<?php }else{ ?>

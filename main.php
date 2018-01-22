@@ -7,9 +7,9 @@
 
 
 <h2 style="text-align: center;">Главная</h2>
-Ваш ID: (в разработке)
+Ваш ID: <b><?php echo $account['id'];?></b>
 <br>
-Никнейм: (в разработке)
+Никнейм: <b><?php echo $account['username'];?></b>
 <hr>
 <div id="realty">
 	<h5 style="text-align: center; ">Недвижемость (в разработке)</h5>
