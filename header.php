@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>BizGame</title>
+<title>BizGame v0.4</title>
 <style type="text/css">
 	header{
 		background-color: #FFFF66; 

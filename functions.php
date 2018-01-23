@@ -41,10 +41,10 @@
 			$query2 = mysqli_query(connect(),"UPDATE `stats` SET `cash` = '".$s_cash."' WHERE `id` = '".$seller_id."'")or die(mysqli_error());
 			//Меняем владельца здания, онулируем цену продажи, меняем себестоимость на цену покупки, снимаем с продажи.
 			$query3 = mysqli_query(connect(),"UPDATE `build` SET `build_owner` = '".$buyer_id."', 
-																`build_in_sell` = 'no', 
-																`build_cost` = '".$price."',
-																`build_sell_cost` = 0
-																WHERE `build_id` = '".$build_id."'")or die(mysqli_error());
+																 `build_in_sell` = 'no', 
+																 `build_cost` = '".$price."',
+																 `build_sell_cost` = 0
+																  WHERE `build_id` = '".$build_id."'")or die(mysqli_error());
 			header('Location: realty.php');
 
 		}elseif($stats_build_buyer['cash'] < $price){
@@ -55,8 +55,20 @@
 
 
 	}
-	function build_sell(){
+	function build_sell($build_id,$build_sell_cost){
+		//устанавливаем build_sell_cost c 0 до суммы указаной в поле,устанавливаем build_in_sell = 'yes'
+		$query = mysqli_query(connect(),"UPDATE `build` SET `build_sell_cost` = '".$build_sell_cost."',
+															 `build_in_sell` = 'yes' 
+															  WHERE `build_id` = '".$build_id."'")or die(mysqli_error());
+		header('Location: realty.php');
 
+	}
+	function build_sell_cancel($build_id){
+		//обнуляем sell_cost и снимаем с продажи
+		$query = mysqli_query(connect(),"UPDATE `build` SET `build_sell_cost` = '0',
+															`build_in_sell` = 'no'
+															 WHERE `build_id` = '".$build_id."'")or die(mysqli_error());
+		header('Location: realty.php');
 	}
 
 
