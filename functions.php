@@ -13,6 +13,47 @@
 		return $link;
 	}
 
+/**
+ * Функции для работы с Работами(трудоустройством)
+ *
+ *
+ */
+	function workv1($work_id,$work_pay,$worker_id){
+		$query = mysqli_query(connect(),"SELECT * FROM `work_log` WHERE `user_id` = '".$worker_id."' AND `work_status` = 'in_work'")or die(mysqli_error());
+		if(mysqli_num_rows($query) > 1){
+			echo "Вы уже устроены на работу!";
+		}else{
+			//Устанавливаем время работы
+			$time_end = time() + 60;
+			$query1 = mysqli_query(connect(),"INSERT INTO `work_log` (`work_id`,`user_id`,`work_start`,`work_end`,`work_pay`,`work_status`) 
+											VALUES ('".$work_id."','".$worker_id."','".time()."','".$time_end."','".$work_pay."','in_work')")
+											or die(mysqli_error());
+			header('Location: work.php');
+		}
+	}
+
+
+	//Проверка о выполнении работы
+	function workv1_check($worker_id){
+					//Запрос к логу работы
+					$query = mysqli_query(connect(),"SELECT * FROM `work_log` WHERE `user_id` = '".$worker_id."' AND `work_status` = 'in_work'")or die(mysqli_error());
+					//делаем массив из логов
+					$query_arr = mysqli_fetch_assoc($query);
+					//Проверяем есть ли не выполненая работа.
+					if(isset($query_arr['work_end'])){
+						//Проверяем закончилось ли работа
+						if(time() >= $query_arr['work_end']){
+							$query1 = mysqli_query(connect(),"UPDATE `work_log` SET `work_status` = 'completed' WHERE `user_id` = '".$worker_id."'") or die(mysqli_error());
+							$get_stats_for_workv1 = mysqli_query(connect(),"SELECT * FROM `stats` WHERE `id` = '".$_SESSION['uid']."'")or die(mysqli_error());
+							$stats_for_workv1 = mysqli_fetch_assoc($get_stats_for_workv1);
+							$cash_update_work = $stats_for_workv1['cash'] + $query_arr['work_pay'];
+							$query2 = mysqli_query(connect(),"UPDATE `stats` SET `cash` = '".$cash_update_work."' WHERE `id` = '".$worker_id."'") or die(mysqli_error());
+							header('Location: main.php');
+						}
+					}
+				}
+
+
 
 /**
  * Функции для работы с недвижимостью

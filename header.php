@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>BizGame v0.4</title>
+<title>BizGame v0.5</title>
 <style type="text/css">
 	header{
 		background-color: #FFFF66; 
@@ -56,10 +56,11 @@
 				
 			?>
 				<ul class="hr">
-					<li>Деньги: $<b><?php echo $stats['cash'];?></b></li>
-					<li>Доход: $0/день(в разработке)</li>
-					<li>Енергия: <b><?php echo $stats['energy'];?></b>/100</li>
-					<li>Найм: 0 человек(в разработке)</li>
+					<li><img width="25" height="25" src="img/pages/bar_cash.jpg" title="Наличные" alt="cash"> $<b><?php echo $stats['cash'];?></b></li>
+					<li><img width="26" height="25" src="img/pages/bar_income.jpg" title="Доход в день" alt="income"> $0/день(в разработке)</li>
+					<li><img width="26" height="25" src="img/pages/bar_worker.jpg" title="Наёмные работники" alt="worker"> 0/0 человек(в разработке)</li>
+					<li><img width="30" height="30" src="img/pages/bar_builder.jpg" title="Строители" alt="builder"> 0/0 человек(в разработке)</li>
+					<li><img width="32" height="32" src="img/pages/bar_energy.jpg" title="Энергия" alt="energy"> <b><?php echo $stats['energy'];?></b>/100</li>
 				</ul>
 			<?php }?>
 		</div>
@@ -70,14 +71,21 @@
 	<div class="col-md-2" id="navigation">
 		<?php
 			if(isset($_SESSION['uid'])){
+				//Проверка на окончание работы.
+				workv1_check($_SESSION['uid']);
+
+
+
+
 		?>
 			<ul>
-				<li><a href="main.php">Главная(В разработке)</a></li>
-				<li><a href="#">Работа(в проекции)</a></li>
-				<li><a href="realty.php">Недвижемости(В разработке)</a></li>
+				<li><a href="main.php"><b>Главная</b>(В разработке)</a></li>
+				<li><a href="work.php"><b>Работа</b>(В разработке)</a></li>
+				<li><a href="realty.php"><b>Недвижемость</b></a></li>
 				<li><a href="#">Бизнес(в проекции)</a></li>
-				<li><a href="#">Строительство(в проекции)</a></li>
+				<li><a href="building.php"><b>Строительство</b>(В разработке)</a></li>
 				<li><a href="#">Рейтинг(в проекции)</a></li>
+				<li><a href="#">Найм(в проекции)</a></li>
 				<li><a href="#">FAQ(в проекции)</a></li>
 				<li><a href="logout.php">Выход</a></li>
 			</ul>

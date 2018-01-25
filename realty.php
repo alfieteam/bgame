@@ -43,7 +43,7 @@
 				<div class="col-md-1"><?php echo $row['build_type'];?></div>
 				<div class="col-md-3"><?php echo $row['build_addres'];?></div>
 				<div class="col-md-1"><?php echo $row['build_profit'];?></div>
-				<div class="col-md-1"><?php echo $row['build_cost'];?></div>
+				<div class="col-md-1">$<?php echo $row['build_cost'];?></div>
 				<div class="col-md-2"><input type="number" name="cost"></div>
 				<div class="col-md-1">
 				<input type="hidden" name="build_id" value="<?php echo $row['build_id'];?>">
@@ -58,13 +58,13 @@
 </div>
 <hr>
 <div id="realty_buy">
-<h4>Рынок недвижимость</h4>
+<h4>Рынок недвижимости</h4>
 	<div class="row">
 		<div class="col-md-1"><b>ID</b></div>
 		<div class="col-md-1"><b>Тип</b></div>
 		<div class="col-md-3"><b>Адрес</b></div>
 		<div class="col-md-2"><b>Доходность</b></div>
-		<div class="col-md-1"><b>Себестоимость</b></div>
+		<div class="col-md-1"><b>Ценность</b></div>
 		<div class="col-md-1"><b>Цена</b></div>
 		<div class="col-md-2"><b>Владелец</b></div>
 		<div class="col-md-1"><b>Рынок</b></div>
@@ -84,8 +84,8 @@
 				<div class="col-md-1"><?php echo $row['build_type'];?></div>
 				<div class="col-md-3"><?php echo $row['build_addres'];?></div>
 				<div class="col-md-2"><?php echo $row['build_profit'];?></div>
-				<div class="col-md-1"><?php echo $row['build_cost'];?></div>
-				<div class="col-md-1"><?php echo $row['build_sell_cost'];?></div>
+				<div class="col-md-1">$<?php echo $row['build_cost'];?></div>
+				<div class="col-md-1">$<?php echo $row['build_sell_cost'];?></div>
 				<div class="col-md-2"><?php echo $account_in_sell_username['username']."(".$row['build_owner'].")";?></div>
 				<div class="col-md-1">
 				<input type="hidden" name="build_id" value="<?php echo $row['build_id'];?>">
