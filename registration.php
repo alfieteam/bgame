@@ -10,6 +10,9 @@
 											`username` = '".$username."',
 											`password` = '".$password."',
 											`email` = '".$email."'");
+		$register_stats = mysqli_query(connect(),"INSERT INTO `stats` SET 
+											`cash` = '0',
+											`energy` = '100'");
 		echo "Вы успешно зарегистрировались!";
 	}
 	if(!isset($_SESSION['uid'])){

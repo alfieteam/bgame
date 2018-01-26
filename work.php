@@ -51,7 +51,32 @@
 <?php
 }
 ?>
+<hr>
+<h6>История(В разработке)</h6>
+<div class="row">
+	<div class="col-md-1"><b>ID_Work</b></div>
+	<div class="col-md-2"><b>Начало</b></div>
+	<div class="col-md-2"><b>Конец</b></div>
+	<div class="col-md-2"><b>Сумма</b></div>
+	<div class="col-md-2"><b>Состояние</b></div>
+</div>
+<?php
 
+	$work_list_completed = mysqli_query(connect(),"SELECT * FROM `work_log` WHERE `user_id` = '".$_SESSION['uid']."' ORDER BY `id` DESC")or die(mysqli_error());
+	//$work_list = mysqli_fetch_assoc($work_list_completed);
+	while($row = mysqli_fetch_assoc($work_list_completed)){
+
+?>
+			<div class="row">
+				<div class="col-md-1"><?php echo $row['work_id'];?></div>
+				<div class="col-md-2"><?php echo date( 'Y-m-d H:i:s', $row['work_start'] );?></div>
+				<div class="col-md-2"><?php echo date( 'Y-m-d H:i:s', $row['work_end'] );?></div>
+				<div class="col-md-2">$<?php echo $row['work_pay'];?></div>
+				<div class="col-md-2"><?php echo $row['work_status'];?></div>
+			</div>
+<?php
+}
+?>
 
 </div>
 <hr>
@@ -74,7 +99,7 @@
 				<div class="col-md-2"></div>
 				<div class="col-md-2"></div>
 				<div class="col-md-2">
-					<input type="submit" class="btn btn-info" name="#" value="Устроится">
+					<input type="button" class="btn btn-info" name="#" value="Устроится">
 				</div>
 			</div>
 		</form>	

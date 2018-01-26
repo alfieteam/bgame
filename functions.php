@@ -48,7 +48,7 @@
 							$stats_for_workv1 = mysqli_fetch_assoc($get_stats_for_workv1);
 							$cash_update_work = $stats_for_workv1['cash'] + $query_arr['work_pay'];
 							$query2 = mysqli_query(connect(),"UPDATE `stats` SET `cash` = '".$cash_update_work."' WHERE `id` = '".$worker_id."'") or die(mysqli_error());
-							header('Location: main.php');
+							//header('Location: work.php');//Нужно сделать так что бы оно не перекидывало никуда, но и что бы нельзя было повторно отправить запрос
 						}
 					}
 				}
@@ -60,7 +60,14 @@
  *
  *
  */
-	function build_create(){
+	function build_create($build_type,$build_country,$build_cost,$builders_amount){
+		$query1 = mysqli_query(connect(),"INSERT INTO `build` (`build_type`,`build_addres`,`build_cost`,`build_owner`,`build_status`) 
+										VALUES ('".$build_type."','".$build_country."','".$build_cost."','".$_SESSION['uid']."','in_construction')")
+										or die(mysqli_error());
+		$building_speed = 86400 / $builders_amount;
+		$building_time = time() + $building_speed;
+		$query2 = mysqli_query(connect(),"INSERT INTO `build_log` (`build_type`,`build_owner`,`builders_amount`,`building_start`,`building_end`,`building_status`) 
+										VALUES ('".$build_type."','".$_SESSION['uid']."','".$builders_amount."','".time()."','".$building_time."','in_construction')")or die(mysqli_error());
 
 	}
 	function build_buy($build_id,$seller_id,$buyer_id,$price){

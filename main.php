@@ -43,7 +43,7 @@
 <div id="working">
 	<h5 style="text-align: center;">Работа (в разработке)</h5>
 	<div class="row">
-		<div class="col-md-4">Должность: Директор(в разработке)</div>
+		<div class="col-md-4">Опыт: Дней/часов/колустройств на работу </div>
 		<div class="col-md-4">Доход: $0/день(в разработке)</div>
 		<div class="col-md-4">Фирма: DiKate Agency(в разработке)</div>
 		<div class="col-md-4">Энергия: 0/0 (в разработке)</div>
