@@ -60,14 +60,26 @@
  *
  *
  */
-	function build_create($build_type,$build_country,$build_cost,$builders_amount){
-		$query1 = mysqli_query(connect(),"INSERT INTO `build` (`build_type`,`build_addres`,`build_cost`,`build_owner`,`build_status`) 
-										VALUES ('".$build_type."','".$build_country."','".$build_cost."','".$_SESSION['uid']."','in_construction')")
+	function build_create($build_type,$build_country,$build_size,$builders_amount){
+
+		$type_cost = array("house" => '1000', "office" => '1000', "hotel" => '1000',
+						   "shop" => '1000', "restaurant" => '1000', "factory" => '1000',
+						   "warehouse" => '1000', "farm" => '1000', "school" => '1000',
+						   "church" => '1000', "hospital" => '1000', "govbuilding" => '10000');
+		$build_country_cost = array("ukraine" => 1.20, "china" => 1.05, "usa" => 1.70, "russia" => 1.25, "poland" => 1.35);
+		
+		//$build_cost = $build_type_cost*$build_country_cost['$build_country']*$build_size;
+		$build_cost = 1000*1.7*$build_size;
+
+
+
+		$query1 = mysqli_query(connect(),"INSERT INTO `build` (`build_type`,`build_country`,`build_size`,`build_cost`,`build_owner`,`build_status`) 
+										VALUES ('".$build_type."','".$build_country."','".$build_size."','".$build_cost."','".$_SESSION['uid']."','in_construction')")
 										or die(mysqli_error());
 		$building_speed = 86400 / $builders_amount;
 		$building_time = time() + $building_speed;
-		$query2 = mysqli_query(connect(),"INSERT INTO `build_log` (`build_type`,`build_owner`,`builders_amount`,`building_start`,`building_end`,`building_status`) 
-										VALUES ('".$build_type."','".$_SESSION['uid']."','".$builders_amount."','".time()."','".$building_time."','in_construction')")or die(mysqli_error());
+		$query2 = mysqli_query(connect(),"INSERT INTO `build_log` (`build_type`,`build_country`,`build_size`,`build_owner`,`builders_amount`,`building_start`,`building_end`,`building_status`) 
+										VALUES ('".$build_type."','".$build_country."','".$build_size."','".$_SESSION['uid']."','".$builders_amount."','".time()."','".$building_time."','in_construction')")or die(mysqli_error());
 
 	}
 	function build_buy($build_id,$seller_id,$buyer_id,$price){

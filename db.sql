@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Янв 26 2018 г., 02:16
+-- Время создания: Янв 28 2018 г., 01:36
 -- Версия сервера: 10.1.29-MariaDB
 -- Версия PHP: 7.2.0
 
@@ -31,7 +31,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `build` (
   `build_id` int(11) NOT NULL,
   `build_type` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `build_addres` varchar(70) CHARACTER SET utf8 NOT NULL,
+  `build_country` varchar(70) CHARACTER SET utf8 NOT NULL,
+  `build_size` int(10) NOT NULL,
   `build_profit` int(11) NOT NULL DEFAULT '0',
   `build_cost` int(11) NOT NULL DEFAULT '0',
   `build_sell_cost` int(11) NOT NULL DEFAULT '0',
@@ -44,12 +45,9 @@ CREATE TABLE `build` (
 -- Дамп данных таблицы `build`
 --
 
-INSERT INTO `build` (`build_id`, `build_type`, `build_addres`, `build_profit`, `build_cost`, `build_sell_cost`, `build_owner`, `build_in_sell`, `build_status`) VALUES
-(1, 'school', 'china', 0, 1000, 0, 6, '', 'in_construction'),
-(2, 'house', 'ukraine', 0, 1000, 0, 6, '', 'in_construction'),
-(3, 'house', 'ukraine', 0, 1000, 0, 6, '', 'in_construction'),
-(4, 'room', 'ukraine', 0, 1000, 0, 6, '', 'in_construction'),
-(5, 'restaurant', 'usa', 0, 2000, 0, 6, '', 'in_construction');
+INSERT INTO `build` (`build_id`, `build_type`, `build_country`, `build_size`, `build_profit`, `build_cost`, `build_sell_cost`, `build_owner`, `build_in_sell`, `build_status`) VALUES
+(20, 'factory', 'usa', 0, 0, 170000, 0, 6, 'no', 'complite'),
+(21, 'hotel', 'usa', 20, 0, 34000, 3000, 6, 'yes', 'complite');
 
 -- --------------------------------------------------------
 
@@ -60,6 +58,8 @@ INSERT INTO `build` (`build_id`, `build_type`, `build_addres`, `build_profit`, `
 CREATE TABLE `build_log` (
   `build_id` int(11) NOT NULL,
   `build_type` varchar(30) CHARACTER SET utf8 NOT NULL,
+  `build_country` varchar(30) CHARACTER SET utf8 NOT NULL,
+  `build_size` int(11) NOT NULL,
   `build_owner` int(11) NOT NULL,
   `builders_amount` int(11) NOT NULL,
   `building_start` int(11) NOT NULL,
@@ -71,12 +71,9 @@ CREATE TABLE `build_log` (
 -- Дамп данных таблицы `build_log`
 --
 
-INSERT INTO `build_log` (`build_id`, `build_type`, `build_owner`, `builders_amount`, `building_start`, `building_end`, `building_status`) VALUES
-(1, '', 6, 5, 1516927665, 1516944945, 'in_construction'),
-(2, '', 6, 1, 1516928195, 1517014595, 'in_construction'),
-(3, 'house', 0, 1, 1516929067, 1517015467, 'in_construction'),
-(4, 'room', 6, 1, 1516929243, 1517015643, 'in_construction'),
-(5, 'restaurant', 6, 5, 1516929260, 1516946540, 'in_construction');
+INSERT INTO `build_log` (`build_id`, `build_type`, `build_country`, `build_size`, `build_owner`, `builders_amount`, `building_start`, `building_end`, `building_status`) VALUES
+(20, 'factory', 'usa', 100, 6, 1, 1517099550, 1517185950, 'in_construction'),
+(21, 'hotel', 'usa', 20, 6, 4, 1517099651, 1517121251, 'in_construction');
 
 -- --------------------------------------------------------
 
@@ -97,7 +94,7 @@ CREATE TABLE `stats` (
 --
 
 INSERT INTO `stats` (`id`, `cash`, `energy`, `builders`, `builders_in_use`) VALUES
-(6, 1858, 100, 10, 6);
+(6, 2194, 100, 10, 6);
 
 -- --------------------------------------------------------
 
@@ -138,7 +135,8 @@ CREATE TABLE `workv1` (
 
 INSERT INTO `workv1` (`id`, `workname`, `work_pay`, `work_owner`) VALUES
 (1, 'Coca-Cola', 100, 'Jeck Rock'),
-(2, 'IQ-commercial', 132, 'Rick Whitehouse');
+(2, 'IQ-commercial', 132, 'Rick Whitehouse'),
+(3, 'Trade RTC', 204, 'Kiki McGarrad');
 
 -- --------------------------------------------------------
 
@@ -170,6 +168,7 @@ INSERT INTO `work_log` (`id`, `work_id`, `user_id`, `work_start`, `work_end`, `w
 (68, 1, 6, 1516908040, 1516908100, 100, 'completed'),
 (69, 2, 6, 1516908116, 1516908176, 132, 'completed'),
 (70, 2, 6, 1516922974, 1516923034, 132, 'completed'),
+(71, 2, 6, 1517095165, 1517095225, 132, 'completed'),
 (59, 2, 6, 1516906591, 1516906651, 110, 'completed'),
 (60, 1, 6, 1516906661, 1516906721, 100, 'completed'),
 (61, 1, 6, 1516906758, 1516906818, 100, 'completed'),
@@ -177,7 +176,8 @@ INSERT INTO `work_log` (`id`, `work_id`, `user_id`, `work_start`, `work_end`, `w
 (57, 1, 6, 1516906403, 1516906463, 100, 'completed'),
 (56, 1, 6, 1516906257, 1516906317, 100, 'completed'),
 (55, 2, 6, 1516905326, 1516905386, 110, 'completed'),
-(54, 1, 6, 1516905258, 1516905318, 100, 'completed');
+(54, 1, 6, 1516905258, 1516905318, 100, 'completed'),
+(72, 3, 6, 1517097142, 1517097202, 204, 'completed');
 
 --
 -- Индексы сохранённых таблиц
@@ -229,13 +229,13 @@ ALTER TABLE `work_log`
 -- AUTO_INCREMENT для таблицы `build`
 --
 ALTER TABLE `build`
-  MODIFY `build_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `build_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT для таблицы `build_log`
 --
 ALTER TABLE `build_log`
-  MODIFY `build_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `build_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT для таблицы `stats`
@@ -253,13 +253,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `workv1`
 --
 ALTER TABLE `workv1`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `work_log`
 --
 ALTER TABLE `work_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
