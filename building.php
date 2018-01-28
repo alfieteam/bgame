@@ -9,7 +9,7 @@
 	include('header.php');
 	if(isset($_SESSION['uid'])){
 		if(isset($_POST['start_building'])){
-			build_create($_POST['build_type'],$_POST['build_country'],$_POST['building_cost'],$_POST['builders_amount']);	
+			build_create($_POST['build_type'],$_POST['build_country'],$_POST['build_size'],$_POST['builders_amount']);	
 		}
 ?>
 <h3>Строительство(В разработке)</h3>
@@ -19,9 +19,9 @@
 <form action="building.php" method="post">
 	<div class="row">
 		<div class="col-md-1"><b>Тип</b></div>
-		<div class="col-md-2"><b>Адрес</b></div>
+		<div class="col-md-2"><b>Страна</b></div>
 		<div class="col-md-2"><b>Строители</b></div>
-		<div class="col-md-2"><b>Стоимость</b></div>
+		<div class="col-md-2"><b>Размер</b></div>
 		<div class="col-md-1"><b>Срок</b></div>
 		<div class="col-md-1"><b>Построить</b></div>
 	</div>
@@ -46,10 +46,10 @@
 		<div class="col-md-2">
 			<select name="build_country">
 				<option value="ukraine">Украина(+20%)</option>
-				<option value="china">Китай(+40%)</option>
-				<option value="usa">США(+60%)</option>
-				<option value="russia">Россия(+80%)</option>
-				<option value="poland">Польша(+100%)</option>
+				<option value="china">Китай(+5%)</option>
+				<option value="usa">США(+70%)</option>
+				<option value="russia">Россия(+25%)</option>
+				<option value="poland">Польша(+35%)</option>
 			</select>
 		</div>
 		<div class="col-md-2">
@@ -59,6 +59,11 @@
 				<option value="3">3</option>
 				<option value="4">4</option>
 				<option value="5">5</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+				<option value="9">9</option>
+				<option value="10">10</option>
 			</select>
 		</div>
 		<script>
@@ -72,14 +77,19 @@
 			}
 		</script>
 		<div class="col-md-2">
-		<select name="building_cost">
-				<option value="1000">1000 - Украина(0%)</option>
-				<option value="1200">1200 - Китай(+20%)</option>
-				<option value="1400">1400 - Польша(+40%)</option>
-				<option value="1800">1800 - Россия(+80%)</option>
-				<option value="2000">2000 - США(+100%)</option>
+		<select name="build_size">
+				<option value="10">10 кв.м</option>
+				<option value="20">20 кв.м</option>
+				<option value="30">30 кв.м</option>
+				<option value="40">40 кв.м</option>
+				<option value="50">50 кв.м</option>
+				<option value="60">60 кв.м</option>
+				<option value="70">70 кв.м</option>
+				<option value="80">80 кв.м</option>
+				<option value="90">90 кв.м</option>
+				<option value="100">100 кв.м</option>
 			</select>
-		<p id="building_cost"></div>
+		</div>
 		<div class="col-md-1"><b><p id="building_time">часов/чел</p></b></div>
 		<div class="col-md-1"><input type="submit" class="btn btn-info" name="start_building" value="Строить"></div>
 	</div>

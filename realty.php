@@ -41,7 +41,7 @@
 			<div class="row">
 				<div class="col-md-1"><?php echo $row['build_id'];?></div>
 				<div class="col-md-1"><?php echo $row['build_type'];?></div>
-				<div class="col-md-3"><?php echo $row['build_addres'];?></div>
+				<div class="col-md-3"><?php echo $row['build_country'];?></div>
 				<div class="col-md-1"><?php echo $row['build_profit'];?></div>
 				<div class="col-md-1">$<?php echo $row['build_cost'];?></div>
 				<div class="col-md-2"><input type="number" name="cost"></div>
@@ -82,7 +82,7 @@
 			<div class="row">
 				<div class="col-md-1"><?php echo $row['build_id'];?></div>
 				<div class="col-md-1"><?php echo $row['build_type'];?></div>
-				<div class="col-md-3"><?php echo $row['build_addres'];?></div>
+				<div class="col-md-3"><?php echo $row['build_country'];?></div>
 				<div class="col-md-2"><?php echo $row['build_profit'];?></div>
 				<div class="col-md-1">$<?php echo $row['build_cost'];?></div>
 				<div class="col-md-1">$<?php echo $row['build_sell_cost'];?></div>
