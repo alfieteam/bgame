@@ -61,27 +61,77 @@
  *
  */
 	function build_create($build_type,$build_country,$build_size,$builders_amount){
+		//Проверка на деньги, изьятие денег за постройку....................................................................................................
 
-		$type_cost = array("house" => '1000', "office" => '1000', "hotel" => '1000',
-						   "shop" => '1000', "restaurant" => '1000', "factory" => '1000',
-						   "warehouse" => '1000', "farm" => '1000', "school" => '1000',
-						   "church" => '1000', "hospital" => '1000', "govbuilding" => '10000');
-		$build_country_cost = array("ukraine" => 1.20, "china" => 1.05, "usa" => 1.70, "russia" => 1.25, "poland" => 1.35);
+		$type_cost = array("house" => '1000',"room" => '1100', "office" => '1200', "hotel" => '1100',
+						   "shop" => '1200', "restaurant" => '2000', "factory" => '1900',
+						   "warehouse" => '700', "farm" => '350', "school" => '1700',
+						   "church" => '4000', "hospital" => '5600', "govbuilding" => '3000');
+		$build_country_cost = array("ukraine" => 1.20, "china" => 1.05, "usa" => 2.30, "russia" => 1.25, "poland" => 1.35);
 		
 		//$build_cost = $build_type_cost*$build_country_cost['$build_country']*$build_size;
-		$build_cost = 1000*1.7*$build_size;
+		$build_cost = $type_cost[''.$build_type.''] * $build_country_cost[''.$build_country.''] * $build_size;
+		$get_stats_build_create = mysqli_query(connect(),"SELECT * FROM `stats` WHERE `id` = '".$_SESSION['uid']."'")or die(mysqli_error());
+		$stats_build_create = mysqli_fetch_assoc($get_stats_build_create);
+		if($stats_build_create['cash'] >= $build_cost && $stats_build_create['builders_free'] >= $builders_amount){
 
+			//Создаём здание
+			$query1 = mysqli_query(connect(),"INSERT INTO `build` (`build_type`,`build_country`,`build_size`,`build_cost`,`build_owner`,`build_status`) 
+											  VALUES ('".$build_type."','".$build_country."','".$build_size."','".$build_cost."','".$_SESSION['uid']."','in_construction')")
+											  or die(mysqli_error());
+			$building_speed = 60 / $builders_amount;
+			$building_time = time() + $building_speed;
+			//Создаём log для дальнейшего перевода в недвижимость
+			$query2 = mysqli_query(connect(),"INSERT INTO `build_log` (`build_type`,`build_country`,`build_size`,`build_owner`,`builders_amount`,`building_start`,`building_end`,`building_status`) 
+											VALUES ('".$build_type."','".$build_country."','".$build_size."','".$_SESSION['uid']."','".$builders_amount."','".time()."','".$building_time."','in_construction')")or die(mysqli_error());
+			//Изымаем деньги и строителей в резерв
+			$cash_result = $stats_build_create['cash'] - $build_cost;
+			$builders_free_result = $stats_build_create['builders_free'] - $builders_amount;
+			$query3 = mysqli_query(connect(),"UPDATE `stats` 
+											  SET `cash` = '".$cash_result."',
+											  `builders_free` = '".$builders_free_result."',
+											  `builders_in_use` = '".$builders_amount."'
+											  WHERE `id` = '".$_SESSION['uid']."'")or die(mysqli_error());
+			//header('Location: building.php');
 
-
-		$query1 = mysqli_query(connect(),"INSERT INTO `build` (`build_type`,`build_country`,`build_size`,`build_cost`,`build_owner`,`build_status`) 
-										VALUES ('".$build_type."','".$build_country."','".$build_size."','".$build_cost."','".$_SESSION['uid']."','in_construction')")
-										or die(mysqli_error());
-		$building_speed = 86400 / $builders_amount;
-		$building_time = time() + $building_speed;
-		$query2 = mysqli_query(connect(),"INSERT INTO `build_log` (`build_type`,`build_country`,`build_size`,`build_owner`,`builders_amount`,`building_start`,`building_end`,`building_status`) 
-										VALUES ('".$build_type."','".$build_country."','".$build_size."','".$_SESSION['uid']."','".$builders_amount."','".time()."','".$building_time."','in_construction')")or die(mysqli_error());
+		}elseif($stats_build_create['cash'] < $build_cost){
+			echo "Бабок НЕ достаточно";
+		}elseif($stats_build_create['builders_free'] < $builders_amount){
+			echo "Недостаточно строителей!";
+		}
 
 	}
+
+	function build_check(){
+		$build_check_query = mysqli_query(connect(),"SELECT * FROM `build_log` WHERE `building_status` = 'in_construction' AND `build_owner` = '".$_SESSION['uid']."'")or die(mysqli_error());
+		while($row = mysqli_fetch_assoc($build_check_query)){
+			if(time() > $row['building_end']){
+				//Необходимо дописать проверку на builder'ов -  освобождение............................................
+				$build_check_update_log = mysqli_query(connect(),"UPDATE `build_log` 
+															  SET `building_status` = 'complite'
+															  WHERE `build_id` = '".$row['build_id']."'")or die(mysqli_error());
+				$build_check_update = mysqli_query(connect(),"UPDATE `build`
+															  SET `build_status` = 'complite',
+															      `build_in_sell` = 'no'
+															  WHERE `build_id` = '".$row['build_id']."'")or die(mysqli_error());
+
+				//Возвращаем строителей
+				$get_stats = mysqli_query(connect(),"SELECT * FROM `stats` WHERE `id` = '".$_SESSION['uid']."'")or die(mysqli_error());
+				$stats = mysqli_fetch_assoc($get_stats);
+				//сумируем освобождённых строителей и свободных
+				$builders_free = $stats['builders_free'] + $row['builders_amount'];
+				$builders_in_use = $stats['builders_in_use'] - $row['builders_amount'];
+				//
+				$query1 = mysqli_query(connect(),"UPDATE `stats` 
+											  SET `builders_free` = '".$builders_free."',
+											  `builders_in_use` = '".$builders_in_use."'
+											  WHERE `id` = '".$_SESSION['uid']."'")or die(mysqli_error());
+				header('Location: building.php');
+			}
+		}
+
+	}
+
 	function build_buy($build_id,$seller_id,$buyer_id,$price){
 
 		//Получаем данные о деньгах покупателя и продавца

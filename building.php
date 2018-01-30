@@ -28,26 +28,26 @@
 	<div class="row">
 		<div class="col-md-1">
 			<select name="build_type">
-				<option value="house">Дом</option>
-				<option value="room">Квартира</option>
-				<option value="office">Офис</option>
-				<option value="hotel">Отель</option>
-				<option value="shop">Магазин</option>
-				<option value="restaurant">Ресторан</option>
-				<option value="factory">Завод</option>
-				<option value="warehouse">Склад</option>
-				<option value="farm">Ферма</option>
-				<option value="school">Школа</option>
-				<option value="church">Церковь</option>
-				<option value="hospital">Госпиталь</option>
-				<option value="govbuilding">Гос.здание</option>
+				<option value="house">Дом(1000)</option>
+				<option value="room">Квартира(1100)</option>
+				<option value="office">Офис(1200)</option>
+				<option value="hotel">Отель(1100)</option>
+				<option value="shop">Магазин(1200)</option>
+				<option value="restaurant">Ресторан(2000)</option>
+				<option value="factory">Завод(1900)</option>
+				<option value="warehouse">Склад(700)</option>
+				<option value="farm">Ферма(350)</option>
+				<option value="school">Школа(1700)</option>
+				<option value="church">Церковь(4000)</option>
+				<option value="hospital">Госпиталь(5600)</option>
+				<option value="govbuilding">Гос.здание(3000)</option>
 			</select>
 		</div>
 		<div class="col-md-2">
 			<select name="build_country">
 				<option value="ukraine">Украина(+20%)</option>
 				<option value="china">Китай(+5%)</option>
-				<option value="usa">США(+70%)</option>
+				<option value="usa">США(+130%)</option>
 				<option value="russia">Россия(+25%)</option>
 				<option value="poland">Польша(+35%)</option>
 			</select>
