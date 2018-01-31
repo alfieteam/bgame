@@ -1,6 +1,7 @@
 <html>
 <head>
-<title>BizGame v0.8</title>
+<title>BizGame v0.9</title>
+<meta charset="utf-8">
 <style type="text/css">
 	header{
 		background-color: #FFFF66; 
@@ -61,6 +62,7 @@
 					<li><img width="26" height="25" src="img/pages/bar_worker.jpg" title="Наёмные работники" alt="worker"> 0/0 человек(в разработке)</li>
 					<li><img width="30" height="30" src="img/pages/bar_builder.jpg" title="Строители" alt="builder"><b><?php echo $stats['builders_free'];?></b>/<?php echo $stats['builders'];?></li>
 					<li><img width="32" height="32" src="img/pages/bar_energy.jpg" title="Энергия" alt="energy"> <b><?php echo $stats['energy'];?></b>/100</li>
+					<li><?php echo date('l j - H:i:s', time())?></li>
 				</ul>
 			<?php }?>
 		</div>

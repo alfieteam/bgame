@@ -33,7 +33,7 @@
 			<div class="row">
 				<div class="col-md-2"><?php echo $row['workname'];?></div>
 				<div class="col-md-2"><?php echo $row['work_owner'];?></div>
-				<div class="col-md-2">$<?php echo $row['work_pay'];?>/минута</div>
+				<div class="col-md-2">$<?php echo $row['work_pay'];?> / <?php echo date('i',''.$row['work_time'].'');?> минут</div>
 				<div class="col-md-2">
 					<input type="hidden" name="work_id" value="<?php echo $row['id'];?>">
 					<input type="hidden" name="work_pay" value="<?php echo $row['work_pay'];?>">

@@ -10,6 +10,7 @@
 
 	function connect(){
 		$link = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME) or die(mysqli_error());
+		mysqli_set_charset($link, 'utf8');
 		return $link;
 	}
 
@@ -24,8 +25,11 @@
 			echo "Вы уже устроены на работу!";
 		}else{
 			//Устанавливаем время работы
-			$time_end = time() + 60;
-			$query1 = mysqli_query(connect(),"INSERT INTO `work_log` (`work_id`,`user_id`,`work_start`,`work_end`,`work_pay`,`work_status`) 
+			$get_work_time = mysqli_query(connect(),"SELECT * FROM `workv1` WHERE `id` = '".$work_id."'")or die(mysqli_error());
+			$work_time = mysqli_fetch_assoc($get_work_time);
+			//Устанавливаем время окончания работы
+			$time_end = time() + $work_time['work_time']; 
+			$query2 = mysqli_query(connect(),"INSERT INTO `work_log` (`work_id`,`user_id`,`work_start`,`work_end`,`work_pay`,`work_status`) 
 											VALUES ('".$work_id."','".$worker_id."','".time()."','".$time_end."','".$work_pay."','in_work')")
 											or die(mysqli_error());
 			header('Location: work.php');
@@ -126,7 +130,6 @@
 											  SET `builders_free` = '".$builders_free."',
 											  `builders_in_use` = '".$builders_in_use."'
 											  WHERE `id` = '".$_SESSION['uid']."'")or die(mysqli_error());
-				header('Location: building.php');
 			}
 		}
 
@@ -187,4 +190,20 @@
  *
  *
  */
+
+/**
+ * Функции для работы с Новостями
+ *
+ *
+ */
+	function get_news(){
+		$news_query = mysqli_query(connect(),"SELECT * FROM `news` ")or die(mysqli_error());
+		while($row = mysqli_fetch_assoc($news_query)){
+			echo "<h5>".$row['title']."</h5>";
+			echo "<p>".$row['text']."</p>";
+			echo "<i>".date('F j, Y  H:i:s',$row['date'])."</i><hr>";
+		}
+	}
+
+
 ?>

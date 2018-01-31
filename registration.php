@@ -12,7 +12,10 @@
 											`email` = '".$email."'");
 		$register_stats = mysqli_query(connect(),"INSERT INTO `stats` SET 
 											`cash` = '0',
-											`energy` = '100'");
+											`energy` = '100',
+											`builders` = '1',
+											`builders_free` = '1',
+											`builders_in_use` = '0'");
 		echo "Вы успешно зарегистрировались!";
 	}
 	if(!isset($_SESSION['uid'])){
