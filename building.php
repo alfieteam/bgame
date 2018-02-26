@@ -88,6 +88,8 @@
 				<option value="80">80 кв.м</option>
 				<option value="90">90 кв.м</option>
 				<option value="100">100 кв.м</option>
+				<option value="200">200 кв.м</option>
+				<option value="500">500 кв.м</option>
 			</select>
 		</div>
 		<div class="col-md-1"><b><p id="building_time">часов/чел</p></b></div>

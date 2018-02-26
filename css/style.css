@@ -1,0 +1,48 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+header {
+	background-color: #FFFF66; 
+	border-bottom: 1px black solid;
+}
+header a {
+	color: black;
+}
+
+.loginform{
+	
+
+}
+#navigation{
+	padding-top: 7px;
+	border-right: 1px black solid;
+
+}
+
+div{
+		padding-left: 7px;
+		padding-right: 7px;
+}
+div div div{
+		padding-top: 5px;
+		padding-bottom: 5px;
+}
+footer{
+		border-top: 1px black solid;
+		background-color: #DCDCDC;
+}
+	#content{
+		background: #F0F8FF;
+	}	
+	#working{
+	}
+ul.hr {
+	    margin: 0; /* Обнуляем значение отступов */
+	    padding: 6px; /* Значение полей */
+}
+ul.hr li {
+	    display: inline; /* Отображать как строчный элемент */
+	    margin-right: 7px; /* Отступ слева */
+	    padding: 5px; /* Поля вокруг текста */
+}

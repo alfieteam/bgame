@@ -3,9 +3,16 @@
 	include('functions.php');
 	include('header.php');
 	if(isset($_POST['register'])){
-		$username = $_POST['username'];
-		$password = md5($_POST['password']);
-		$email = $_POST['email'];
+		$username = trim($_POST['username']);
+		$pass = trim($_POST['password']);
+		$password = md5($pass);
+		//Проверка на валидность Email
+		if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
+			echo "Некоректно введён email";
+		}
+		elseif(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+			$email = $_POST['email'];
+		}
 		$register = mysqli_query(connect(),"INSERT INTO `users` SET 
 											`username` = '".$username."',
 											`password` = '".$password."',

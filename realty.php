@@ -27,7 +27,8 @@
 	<div class="row">
 		<div class="col-md-1"><b>ID</b></div>
 		<div class="col-md-1"><b>Тип</b></div>
-		<div class="col-md-3"><b>Адрес</b></div>
+		<div class="col-md-2"><b>Адрес</b></div>
+		<div class="col-md-1"><b>кв.м.</b></div>
 		<div class="col-md-1"><b>Доходность</b></div>
 		<div class="col-md-1"><b>Стоимость</b></div>
 		<div class="col-md-2"><b>Цена продажи $</b></div>
@@ -41,7 +42,8 @@
 			<div class="row">
 				<div class="col-md-1"><?php echo $row['build_id'];?></div>
 				<div class="col-md-1"><?php echo $row['build_type'];?></div>
-				<div class="col-md-3"><?php echo $row['build_country'];?></div>
+				<div class="col-md-2"><?php echo $row['build_country'];?></div>
+				<div class="col-md-1"><?php echo $row['build_size'];?></div>
 				<div class="col-md-1"><?php echo $row['build_profit'];?></div>
 				<div class="col-md-1">$<?php echo $row['build_cost'];?></div>
 				<div class="col-md-2"><input type="number" name="cost"></div>
@@ -62,7 +64,8 @@
 	<div class="row">
 		<div class="col-md-1"><b>ID</b></div>
 		<div class="col-md-1"><b>Тип</b></div>
-		<div class="col-md-3"><b>Адрес</b></div>
+		<div class="col-md-2"><b>Адрес</b></div>
+		<div class="col-md-1"><b>кв.м.</b></div>
 		<div class="col-md-2"><b>Доходность</b></div>
 		<div class="col-md-1"><b>Ценность</b></div>
 		<div class="col-md-1"><b>Цена</b></div>
@@ -82,7 +85,8 @@
 			<div class="row">
 				<div class="col-md-1"><?php echo $row['build_id'];?></div>
 				<div class="col-md-1"><?php echo $row['build_type'];?></div>
-				<div class="col-md-3"><?php echo $row['build_country'];?></div>
+				<div class="col-md-2"><?php echo $row['build_country'];?></div>
+				<div class="col-md-1"><?php echo $row['build_size'];?></div>
 				<div class="col-md-2"><?php echo $row['build_profit'];?></div>
 				<div class="col-md-1">$<?php echo $row['build_cost'];?></div>
 				<div class="col-md-1">$<?php echo $row['build_sell_cost'];?></div>

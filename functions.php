@@ -57,6 +57,80 @@
 					}
 				}
 
+/**
+ * Функции для работы с Бизнесом
+ *
+ *
+ */
+
+	function business_create($id_business_model, $id_select_build){
+		// получаем данные выбраной бизнес модели
+		$qBusinnesModel = mysqli_query(connect(),"SELECT * FROM `businnes` WHERE `id` = '".$id_business_model."'")or die(mysqli_error());
+		$qBModel = mysqli_fetch_assoc($qBusinnesModel);
+		// получаем данные Stats юзера
+		$qStats = mysqli_query(connect(),"SELECT * FROM `stats` WHERE `id` = '".$_SESSION['uid']."'")or die(mysqli_error());
+		$Bstats = mysqli_fetch_assoc($qStats);
+		// получаем данные о здании и проверяем на валидность выбора.
+		$qBuild = mysqli_query(connect(),"SELECT * FROM `build` WHERE `build_id` = '".$id_select_build."',
+																	  `build_owner` = '".$_SESSION['uid']."',
+																	  `build_in_sell` = 'no', 
+																	  `build_status` = 'complite'")or die(mysqli_error());
+		$Bbuild = mysqli_fetch_assoc($qBuild);
+
+		//проверяем есть ли 
+
+
+		$qBusinessLog = mysqli_query(connect(),"INSERT INTO `business_log`
+												(`id_business`,`name`,`id_owner`,`income`,`worker`,`type`,`id_build`,`build_size`,`cost`,`level`)
+												VALUES
+												('1','2','3','4','5','6','7','8','9','10')
+
+												")or die(mysqli_error());
+
+		//Блокируем здание под бизнес
+	/*	$BuildUpdate = mysqli_query(connect(),"UPDATE `build_log`
+												()
+												SET
+												()
+
+												")or die(mysqli_error());
+	*/
+	}
+
+	function select_business_build($build_type, $build_size,$build_country){
+		$uid = $_SESSION['uid'];
+		$query = mysqli_query(connect(),"SELECT * FROM `build` WHERE  `build_owner` = '$uid' AND
+																	  `build_type` = '$build_type' AND  
+																	  `build_size` >= '$build_size' AND
+																	  `build_country` = '$build_country' AND
+																	  `build_in_sell` = 'no' AND
+																	  `build_status` = 'complite'")or die(mysqli_error());
+		if(mysqli_num_rows($query) > 0){
+			while($row = mysqli_fetch_assoc($query)){
+				echo "<option value='".$row['build_id']."'>";
+				echo "Подходящее здание ID: ".$row['build_id'];
+				echo "</option>";
+			}
+		}else{
+			echo "<option>";
+			echo "Нет вариантов";
+			echo "</option>";
+		}
+		
+
+			
+	}
+
+
+
+
+
+
+
+
+
+
+
 
 
 /**
@@ -197,7 +271,7 @@
  *
  */
 	function get_news(){
-		$news_query = mysqli_query(connect(),"SELECT * FROM `news` ")or die(mysqli_error());
+		$news_query = mysqli_query(connect(),"SELECT * FROM `news` ORDER BY `id` DESC")or die(mysqli_error());
 		while($row = mysqli_fetch_assoc($news_query)){
 			echo "<h5>".$row['title']."</h5>";
 			echo "<p>".$row['text']."</p>";
