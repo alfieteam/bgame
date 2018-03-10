@@ -4,6 +4,11 @@
 	if(isset($_SESSION['uid'])){
 		include('mysqli_query.php');
 	}
+	if(isset($_POST['create']) && isset($_POST['id_select_build'])){
+		print_r($_POST);
+		business_create($_POST['id_business_model'], $_POST['id_select_build']);
+
+	}
 	include('header.php');
 	if(isset($_SESSION['uid'])){
 ?>
@@ -31,7 +36,10 @@
 ?>
 		<form action="business.php" method="post">
 			<div class="row">
-				<div class="col-md-1"><?php echo $row['id'];?></div>
+				<div class="col-md-1">
+					<?php echo $row['id'];?>
+					<input type="hidden" name="id_business_model" value="<?php echo $row['id'];?>">	
+				</div>
 				<div class="col-md-1"><?php echo $row['type'];?></div>
 				<div class="col-md-1"><?php echo $row['build_type'];?></div>
 				<div class="col-md-1"><?php echo $row['build_size'];?></div>
@@ -40,15 +48,15 @@
 				<div class="col-md-1">$<?php echo $row['cost'];?></div>
 				<div class="col-md-1"><?php echo $row['level'];?></div>
 				<div class="col-md-1">
-				<input type="submit" class="btn btn-info" name="sell" value="Выбрать">
+				<input type="submit" class="btn btn-info" name="create" value="Выбрать">
 				</div>
 				<div class="col-md-1">
-				<select>
+				<select name="id_select_build">
 					<?php 
 						select_business_build($row['build_type'],$row['build_size'],$row['build_country']);
 						
 					?>
-					</select>
+				</select>
 				</div>
 			</div>
 		</form>

@@ -46,3 +46,21 @@ ul.hr li {
 	    margin-right: 7px; /* Отступ слева */
 	    padding: 5px; /* Поля вокруг текста */
 }
+
+
+#fail{
+	margin-left: 25%;
+	margin-right: 25%;
+	padding: 10px;
+	text-align: center;
+	font-weight: bold;
+	color: red;
+}
+#success{
+	margin-left: 25%;
+	margin-right: 25%;
+	padding: 10px;
+	text-align: center;
+	font-weight: bold;
+	color: green;
+}
